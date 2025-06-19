@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Map from '../components/Map';
-import SidePanel from '../components/SidePanel';
+import CountrySidePanel from '../components/CountrySidePanel';
 import countryMeta from '../data/countryMeta.json';
 import { useState } from 'react';
 
@@ -16,7 +16,7 @@ export default function BusinessView() {
         <h1>Business View</h1>
         <Map />
       </main>
-      <SidePanel country={selected || countryMeta[0]} />
+      <CountrySidePanel country={selected || countryMeta[0]} />
     </div>
   );
 }

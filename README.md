@@ -19,10 +19,10 @@ src/
   components/
     Map.jsx
     NodeTooltip.jsx
-    SidePanel.jsx
+    CountrySidePanel.jsx
     ArticleForm.jsx
     RelationshipMap.jsx
-    RelationshipSidePanel.jsx
+    SidePanel.jsx
   data/
     relationships.json
     countryMeta.json
