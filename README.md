@@ -34,7 +34,6 @@ src/
     api/
       relationships.js
 ```
-
 ## Deploying on Vercel
 
 1. Push this repository to GitHub.
