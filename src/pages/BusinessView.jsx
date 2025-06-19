@@ -14,7 +14,7 @@ export default function BusinessView() {
       </Head>
       <main style={{ flexGrow: 1 }}>
         <h1>Business View</h1>
-        <Map />
+        <Map onCountrySelect={setSelected} />
       </main>
       <CountrySidePanel country={selected || countryMeta[0]} />
     </div>
