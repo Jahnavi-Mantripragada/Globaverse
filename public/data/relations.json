@@ -1,0 +1,18 @@
+[
+  {
+    "source": "United States of America",
+    "target": "United Kingdom",
+    "type": "alliance",
+    "justification": "Longstanding NATO partners",
+    "sources": ["https://www.nato.int/"],
+    "tags": ["NATO", "alliance"]
+  },
+  {
+    "source": "United States of America",
+    "target": "Russia",
+    "type": "conflict",
+    "justification": "Ongoing political tensions",
+    "sources": ["https://www.state.gov/"],
+    "tags": ["sanctions", "tension"]
+  }
+]
