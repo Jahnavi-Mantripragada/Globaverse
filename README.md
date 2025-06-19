@@ -1,6 +1,6 @@
 # GeoTangle
 
-GeoTangle visualizes global alliances and conflicts on an interactive world map.
+GeoTangle visualizes global alliances and conflicts. It includes a world map and a relationship graph view.
 The app is built with Next.js, React, and D3.js and is ready for deployment on Vercel.
 
 ## Getting Started
@@ -21,6 +21,8 @@ src/
     NodeTooltip.jsx
     SidePanel.jsx
     ArticleForm.jsx
+    RelationshipMap.jsx
+    RelationshipSidePanel.jsx
   data/
     relationships.json
     countryMeta.json

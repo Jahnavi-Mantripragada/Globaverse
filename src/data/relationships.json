@@ -5,7 +5,8 @@
     "type": "alliance",
     "justification": "Longstanding NATO partners",
     "sources": ["https://www.nato.int/"],
-    "tags": ["NATO", "alliance"]
+    "tags": ["NATO", "alliance"],
+    "timeline": "1949-present"
   },
   {
     "source": "United States of America",
@@ -13,6 +14,7 @@
     "type": "conflict",
     "justification": "Ongoing political tensions",
     "sources": ["https://www.state.gov/"],
-    "tags": ["sanctions", "tension"]
+    "tags": ["sanctions", "tension"],
+    "timeline": "2014-present"
   }
 ]
