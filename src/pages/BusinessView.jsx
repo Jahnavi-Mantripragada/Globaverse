@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Map from '../components/Map';
-import CountryRelationshipsPanel from '../components/CountryRelationshipsPanel';
-import relationships from '../data/relationships.json';
+import CountrySidePanel from '../components/CountrySidePanel';
+import countryMeta from '../data/countryMeta.json';
 import { useState } from 'react';
 
 export default function BusinessView() {
@@ -16,7 +16,7 @@ export default function BusinessView() {
         <h1>Business View</h1>
         <Map onCountrySelect={setSelected} />
       </main>
-      <CountryRelationshipsPanel country={selected} relationships={relationships} />
+      <CountrySidePanel country={selected || countryMeta[0]} />
     </div>
   );
 }

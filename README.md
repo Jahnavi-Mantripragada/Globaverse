@@ -20,7 +20,6 @@ src/
     Map.jsx
     NodeTooltip.jsx
     CountrySidePanel.jsx
-    CountryRelationshipsPanel.jsx
     ArticleForm.jsx
     RelationshipMap.jsx
     SidePanel.jsx

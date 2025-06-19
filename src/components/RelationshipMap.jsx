@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import relationships from '../data/relationships.json';
 import { relationColor } from '../utils/colorUtils';
 import SidePanel from './SidePanel';
+import FilterPanel from './FilterPanel';
 
 const width = 600;
 const height = 400;
@@ -10,13 +11,26 @@ const height = 400;
 export default function RelationshipMap() {
   const svgRef = useRef(null);
   const [selected, setSelected] = useState(null);
+  const [filters, setFilters] = useState({
+    showAlliance: true,
+    showConflict: true,
+    tag: '',
+    country: '',
+  });
 
   useEffect(() => {
+    const filtered = relationships.filter((rel) => {
+      if (!filters.showAlliance && rel.type === 'alliance') return false;
+      if (!filters.showConflict && rel.type === 'conflict') return false;
+      if (filters.tag && !rel.tags.includes(filters.tag)) return false;
+      return true;
+    });
+
     const nodes = Array.from(
-      new Set(relationships.flatMap(r => [r.source, r.target])),
-      id => ({ id })
+      new Set(filtered.flatMap((r) => [r.source, r.target])),
+      (id) => ({ id })
     );
-    const links = relationships.map(rel => ({ ...rel }));
+    const links = filtered.map((rel) => ({ ...rel }));
 
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
@@ -47,8 +61,28 @@ export default function RelationshipMap() {
       .selectAll('line')
       .data(links)
       .join('line')
-      .attr('stroke', d => relationColor(d.type))
-      .attr('marker-end', d => `url(#arrow-${d.type})`)
+      .attr('stroke', (d) => relationColor(d.type))
+      .attr('marker-end', (d) => `url(#arrow-${d.type})`)
+      .attr('stroke-width', (d) => {
+        const h = filters.country;
+        const involves =
+          h &&
+          (d.source === h ||
+            d.target === h ||
+            (d.source.id && d.source.id === h) ||
+            (d.target.id && d.target.id === h));
+        return involves ? 3 : 1.5;
+      })
+      .attr('opacity', (d) => {
+        const h = filters.country;
+        if (!h) return 1;
+        const involves =
+          d.source === h ||
+          d.target === h ||
+          (d.source.id && d.source.id === h) ||
+          (d.target.id && d.target.id === h);
+        return involves ? 1 : 0.3;
+      })
       .on('click', (event, d) => setSelected(d));
 
     const node = svg
@@ -120,12 +154,13 @@ export default function RelationshipMap() {
       event.subject.fx = null;
       event.subject.fy = null;
     }
-  }, []);
+  }, [filters]);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ position: 'relative', display: 'flex' }}>
       <svg ref={svgRef} width={width} height={height} />
       <SidePanel relation={selected} />
+      <FilterPanel filters={filters} setFilters={setFilters} />
     </div>
   );
 }
