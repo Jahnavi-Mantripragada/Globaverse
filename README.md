@@ -12,15 +12,38 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the app.
 
+## File Structure
+
+```
+src/
+  components/
+    Map.jsx
+    NodeTooltip.jsx
+    SidePanel.jsx
+    ArticleForm.jsx
+  data/
+    relationships.json
+    countryMeta.json
+  utils/
+    colorUtils.js
+    formatter.js
+  pages/
+    Home.jsx
+    Contribute.jsx
+    BusinessView.jsx
+    api/
+      relationships.js
+```
 ## Deploying on Vercel
 
 1. Push this repository to GitHub.
 2. Import the project in Vercel.
 3. Set the build command to `npm run build` and the output directory to `.next`.
+4. The included `vercel.json` configures the Next.js build on Vercel.
 
 ## Data Format
 
-`data/relations.json` contains relationships between countries:
+`src/data/relationships.json` contains relationships between countries:
 
 ```json
 {
