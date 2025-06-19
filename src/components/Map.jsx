@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { feature } from 'topojson-client';
+import NodeTooltip from './NodeTooltip';
+import { relationColor } from '../utils/colorUtils';
 
 const width = 960;
 const height = 500;
 
-export default function GeoTangleMap() {
+export default function Map() {
   const svgRef = useRef(null);
   const [relations, setRelations] = useState([]);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    fetch('/data/relations.json')
+    fetch('/api/relationships')
       .then((res) => res.json())
       .then(setRelations)
       .catch((err) => console.error('Failed to load relations', err));
@@ -67,13 +70,16 @@ export default function GeoTangleMap() {
         .datum({ source, target })
         .attr('d', lineGenerator)
         .attr('fill', 'none')
-        .attr('stroke', rel.type === 'alliance' ? 'green' : 'red')
+        .attr('stroke', relationColor(rel.type))
         .attr('stroke-width', 2)
-        .on('click', () => alert(`Justification: ${rel.justification}\nSources: ${rel.sources.join(', ')}\nTags: ${rel.tags.join(', ')}`));
+        .on('click', () => setSelected(rel));
     });
   };
 
   return (
-    <svg ref={svgRef} width={width} height={height} />
+    <div style={{ position: 'relative' }}>
+      <svg ref={svgRef} width={width} height={height} />
+      <NodeTooltip relation={selected} />
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
-const GeoTangleMap = dynamic(() => import('../components/GeoTangleMap'), {
+const Map = dynamic(() => import('../components/Map'), {
   ssr: false,
 });
 
@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
       <main>
         <h1>GeoTangle</h1>
-        <GeoTangleMap />
+        <Map />
       </main>
     </div>
   );
