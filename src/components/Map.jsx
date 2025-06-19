@@ -7,7 +7,7 @@ import { relationColor } from '../utils/colorUtils';
 const width = 960;
 const height = 500;
 
-export default function Map() {
+export default function Map({ onCountrySelect }) {
   const svgRef = useRef(null);
   const [relations, setRelations] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -53,7 +53,10 @@ export default function Map() {
         .attr('cx', x)
         .attr('cy', y)
         .attr('r', 2)
-        .attr('fill', 'black');
+        .attr('fill', 'black')
+        .on('click', () => {
+          if (onCountrySelect) onCountrySelect(country.properties.name);
+        });
     });
 
     const lineGenerator = d3.linkHorizontal()
