@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import relationships from '../data/relationships.json';
 import { relationColor } from '../utils/colorUtils';
-import RelationshipSidePanel from './RelationshipSidePanel';
+import SidePanel from './SidePanel';
 
 const width = 600;
 const height = 400;
@@ -125,7 +125,7 @@ export default function RelationshipMap() {
   return (
     <div style={{ display: 'flex' }}>
       <svg ref={svgRef} width={width} height={height} />
-      <RelationshipSidePanel relation={selected} />
+      <SidePanel relation={selected} />
     </div>
   );
 }
