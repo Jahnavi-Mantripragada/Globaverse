@@ -1,20 +1,11 @@
 import React from 'react';
+import styles from '../styles/RelationshipMap.module.css';
 
 export default function FilterPanel({ filters, setFilters }) {
   const update = (changes) => setFilters({ ...filters, ...changes });
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        background: '#fff',
-        padding: '1rem',
-        border: '1px solid #ccc',
-        zIndex: 1,
-      }}
-    >
+    <div className={styles['control-panel']}>
       <div>
         <label>
           <input

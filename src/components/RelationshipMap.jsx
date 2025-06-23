@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import relationships from '../data/relationships.json';
+import countries from '../data/countries.json';
 import { relationColor } from '../utils/colorUtils';
 import SidePanel from './SidePanel';
 import FilterPanel from './FilterPanel';
+import styles from '../styles/RelationshipMap.module.css';
+
+const countryNames = countries.reduce((acc, c) => {
+  acc[c.code] = c.name;
+  return acc;
+}, {});
 
 const width = 600;
 const height = 400;
@@ -11,6 +18,7 @@ const height = 400;
 export default function RelationshipMap() {
   const svgRef = useRef(null);
   const [selected, setSelected] = useState(null);
+  const [tooltip, setTooltip] = useState(null);
   const [filters, setFilters] = useState({
     showAlliance: true,
     showConflict: true,
@@ -95,7 +103,17 @@ export default function RelationshipMap() {
           (d.target.id && d.target.id === h);
         return involves ? 1 : 0.3;
       })
-      .on('click', (event, d) => setSelected(d));
+      .on('click', (event, d) => setSelected(d))
+      .on('mousemove', (event, d) => {
+        const rect = svgRef.current.getBoundingClientRect();
+        setTooltip({
+          type: 'edge',
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          data: d,
+        });
+      })
+      .on('mouseout', () => setTooltip(null));
 
     const node = zoomGroup
       .append('g')
@@ -106,6 +124,7 @@ export default function RelationshipMap() {
       .join('circle')
       .attr('r', 5)
       .attr('fill', 'steelblue')
+      .attr('cursor', 'pointer')
       .call(
         d3
           .drag()
@@ -116,7 +135,24 @@ export default function RelationshipMap() {
       .on('click', (event, d) => {
         const rel = relationships.find(r => r.source === d.id || r.target === d.id);
         setSelected(rel);
-      });
+      })
+      .on('mousemove', (event, d) => {
+        const rect = svgRef.current.getBoundingClientRect();
+        const rels = relationships.filter(r => r.source === d.id || r.target === d.id);
+        const region = rels.find(r => r.source === d.id)?.source_region ||
+          rels.find(r => r.target === d.id)?.target_region || '';
+        setTooltip({
+          type: 'node',
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+          data: {
+            name: countryNames[d.id] || d.id,
+            region,
+            count: rels.length,
+          },
+        });
+      })
+      .on('mouseout', () => setTooltip(null));
 
     const label = zoomGroup
       .append('g')
@@ -182,8 +218,27 @@ export default function RelationshipMap() {
   }, [filters]);
 
   return (
-    <div style={{ position: 'relative', display: 'flex' }}>
-      <svg ref={svgRef} width={width} height={height} />
+    <div className={styles.container}>
+      <svg ref={svgRef} className={styles.graph} />
+      {tooltip && (
+        <div
+          className={styles.tooltip}
+          style={{ left: tooltip.x, top: tooltip.y }}
+        >
+          {tooltip.type === 'node' ? (
+            <>
+              <strong>{tooltip.data.name}</strong>
+              <div>Region: {tooltip.data.region || 'N/A'}</div>
+              <div>Relationships: {tooltip.data.count}</div>
+            </>
+          ) : (
+            <>
+              <div>{tooltip.data.justification}</div>
+              <div>Tags: {tooltip.data.tags.join(', ')}</div>
+            </>
+          )}
+        </div>
+      )}
       <SidePanel relation={selected} />
       <FilterPanel filters={filters} setFilters={setFilters} />
     </div>
