@@ -1,20 +1,100 @@
 [
   {
-    "source": "United States of America",
-    "target": "United Kingdom",
-    "type": "alliance",
-    "justification": "Longstanding NATO partners",
-    "sources": ["https://www.nato.int/"],
-    "tags": ["NATO", "alliance"],
-    "timeline": "1949-present"
+    "source": "IND",
+    "target": "IRN",
+    "type": "conflict",
+    "justification": "Sanctions - Nuclear disagreement",
+    "timeline": "since 2010",
+    "directionality": "uni",
+    "tags": ["nuclear", "sanctions"],
+    "source_region": "Asia",
+    "target_region": "Middle East",
+    "edge_color": "red"
   },
   {
-    "source": "United States of America",
-    "target": "Russia",
+    "source": "IND",
+    "target": "RUS",
+    "type": "alliance",
+    "justification": "Historic defense partnership",
+    "timeline": "Cold War to present",
+    "directionality": "bi",
+    "tags": ["defense"],
+    "source_region": "Asia",
+    "target_region": "Eurasia",
+    "edge_color": "green"
+  },
+  {
+    "source": "IND",
+    "target": "EU",
+    "type": "alliance",
+    "justification": "Energy collaboration and trade",
+    "timeline": "since 2015",
+    "directionality": "bi",
+    "tags": ["energy"],
+    "source_region": "Asia",
+    "target_region": "Europe",
+    "edge_color": "green"
+  },
+  {
+    "source": "USA",
+    "target": "IRN",
     "type": "conflict",
-    "justification": "Ongoing political tensions",
-    "sources": ["https://www.state.gov/"],
-    "tags": ["sanctions", "tension"],
-    "timeline": "2014-present"
+    "justification": "Nuclear program sanctions",
+    "timeline": "since 2006",
+    "directionality": "uni",
+    "tags": ["nuclear", "sanctions"],
+    "source_region": "North America",
+    "target_region": "Middle East",
+    "edge_color": "red"
+  },
+  {
+    "source": "USA",
+    "target": "EU",
+    "type": "alliance",
+    "justification": "NATO and economic partnership",
+    "timeline": "since 1949",
+    "directionality": "bi",
+    "tags": ["NATO", "trade"],
+    "edge_color": "green"
+  },
+  {
+    "source": "USA",
+    "target": "SAU",
+    "type": "alliance",
+    "justification": "Strategic oil and security cooperation",
+    "timeline": "since 1945",
+    "directionality": "bi",
+    "tags": ["energy", "security"],
+    "edge_color": "green"
+  },
+  {
+    "source": "CHN",
+    "target": "PAK",
+    "type": "alliance",
+    "justification": "Economic corridor and defense ties",
+    "timeline": "ongoing",
+    "directionality": "bi",
+    "tags": ["economic", "defense"],
+    "edge_color": "green"
+  },
+  {
+    "source": "TUR",
+    "target": "RUS",
+    "type": "conflict",
+    "justification": "Regional rivalry in Syria",
+    "timeline": "since 2016",
+    "directionality": "uni",
+    "tags": ["proxy war"],
+    "edge_color": "red"
+  },
+  {
+    "source": "FRA",
+    "target": "RUS",
+    "type": "conflict",
+    "justification": "Sanctions over Ukraine",
+    "timeline": "since 2014",
+    "directionality": "uni",
+    "tags": ["sanctions"],
+    "edge_color": "red"
   }
 ]
