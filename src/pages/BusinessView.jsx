@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import Map from '../components/Map';
 import CountrySidePanel from '../components/CountrySidePanel';
-import countryMeta from '../data/countryMeta.json';
 import { useState } from 'react';
 
 export default function BusinessView() {
   const [selected, setSelected] = useState(null);
+
+  const selectedCountry = selected ? { name: selected, code: '' } : null;
 
   return (
     <div style={{ display: 'flex' }}>
@@ -17,7 +18,7 @@ export default function BusinessView() {
         <Map onCountrySelect={setSelected} />
       </main>
       <CountrySidePanel
-        country={selected || countryMeta[0]}
+        country={selectedCountry}
         onClose={() => setSelected(null)}
       />
     </div>

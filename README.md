@@ -25,7 +25,6 @@ src/
     SidePanel.jsx
   data/
     relationships.json
-    countryMeta.json
   utils/
     colorUtils.js
     formatter.js
