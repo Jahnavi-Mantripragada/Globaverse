@@ -39,6 +39,17 @@ export default function RelationshipMap() {
       .attr('viewBox', [0, 0, width, height])
       .style('font', '12px sans-serif');
 
+    const zoomGroup = svg.append('g');
+
+    svg.call(
+      d3
+        .zoom()
+        .scaleExtent([0.5, 5])
+        .on('zoom', (event) => {
+          zoomGroup.attr('transform', event.transform);
+        })
+    );
+
     const defs = svg.append('defs');
     ['alliance', 'conflict'].forEach(type => {
       defs
@@ -55,7 +66,7 @@ export default function RelationshipMap() {
         .attr('fill', relationColor(type));
     });
 
-    const link = svg
+    const link = zoomGroup
       .append('g')
       .attr('stroke-width', 1.5)
       .selectAll('line')
@@ -63,6 +74,7 @@ export default function RelationshipMap() {
       .join('line')
       .attr('stroke', (d) => relationColor(d.type))
       .attr('marker-end', (d) => `url(#arrow-${d.type})`)
+      .attr('stroke-dasharray', d => d.type === 'conflict' ? '4 2' : null)
       .attr('stroke-width', (d) => {
         const h = filters.country;
         const involves =
@@ -85,7 +97,7 @@ export default function RelationshipMap() {
       })
       .on('click', (event, d) => setSelected(d));
 
-    const node = svg
+    const node = zoomGroup
       .append('g')
       .attr('stroke', '#fff')
       .attr('stroke-width', 1.5)
@@ -106,7 +118,7 @@ export default function RelationshipMap() {
         setSelected(rel);
       });
 
-    const label = svg
+    const label = zoomGroup
       .append('g')
       .selectAll('text')
       .data(nodes)
@@ -114,6 +126,15 @@ export default function RelationshipMap() {
       .text(d => d.id)
       .attr('x', 8)
       .attr('y', 4);
+
+    const linkLabel = zoomGroup
+      .append('g')
+      .selectAll('text')
+      .data(links)
+      .join('text')
+      .attr('text-anchor', 'middle')
+      .attr('dy', -4)
+      .text(d => (d.justification?.length > 30 ? d.justification.slice(0, 30) + '...' : d.justification));
 
     const simulation = d3
       .forceSimulation(nodes)
@@ -136,6 +157,9 @@ export default function RelationshipMap() {
 
       node.attr('cx', d => d.x).attr('cy', d => d.y);
       label.attr('transform', d => `translate(${d.x},${d.y})`);
+      linkLabel
+        .attr('x', d => (d.source.x + d.target.x) / 2)
+        .attr('y', d => (d.source.y + d.target.y) / 2);
     });
 
     function dragstarted(event) {
@@ -154,6 +178,7 @@ export default function RelationshipMap() {
       event.subject.fx = null;
       event.subject.fy = null;
     }
+    return () => simulation.stop();
   }, [filters]);
 
   return (
