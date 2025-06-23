@@ -1,33 +1,33 @@
 import React from 'react';
+import styles from '../styles/SidePanel.module.css';
 
-export default function SidePanel({ relation }) {
-  const style = {
-    width: '25%',
-    padding: '1rem',
-    borderLeft: '1px solid #ccc',
-    transform: relation ? 'translateX(0)' : 'translateX(100%)',
-    transition: 'transform 0.3s ease-in-out',
-  };
 
-  if (!relation) {
-    return <aside style={style}>Select a relationship</aside>;
-  }
+function SidePanel({ selectedCountry, onClose, relationships }) {
+  if (!selectedCountry) return null;
+
+  const filtered = relationships.filter(
+    rel => rel.source === selectedCountry || rel.target === selectedCountry
+  );
 
   return (
-    <aside style={style}>
-      <h2>{relation.source} → {relation.target}</h2>
-      <p>Type: {relation.type}</p>
-      <p>Justification: {relation.justification}</p>
-      <p>Tags: {relation.tags.join(', ')}</p>
-      <div>
-        {relation.sources.map((url) => (
-          <div key={url}>
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              {url}
-            </a>
+    <div className="{styles.sidepanel}">
+      <button onClick={onClose} className="close-btn">✖</button>
+      <h2>{selectedCountry}</h2>
+      {filtered.length === 0 ? (
+        <p>No relationships found.</p>
+      ) : (
+        filtered.map((rel, i) => (
+          <div key={i} className="relation-box">
+            <strong>{rel.source} ↔ {rel.target}</strong><br />
+            Type: {rel.type}<br />
+            <em>{rel.jits}</em><br />
+            Tags: {rel.tags.join(', ')}<br />
+            <a href={rel.sources[0]} target="_blank" rel="noreferrer">Source</a>
           </div>
-        ))}
-      </div>
-    </aside>
+        ))
+      )}
+    </div>
   );
 }
+
+export default SidePanel;

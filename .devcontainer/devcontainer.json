@@ -1,0 +1,8 @@
+{
+  "name": "GeoTangle CRA",
+  "customizations": {
+    "codespaces": {
+      "defaultStartupCommand": "npm start"
+    }
+  }
+}

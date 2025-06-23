@@ -1,5 +1,10 @@
-import '../styles/globals.css';
+import MermaidMap from '../components/MermaidMap';
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+export default function Home() {
+  return (
+    <div style={{ padding: '2rem' }}>
+      <h1></h1>
+      <MermaidMap />
+    </div>
+  );
 }
