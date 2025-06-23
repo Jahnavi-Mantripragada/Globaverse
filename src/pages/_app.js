@@ -1,10 +1,10 @@
-import MermaidMap from '../components/MermaidMap';
+import RelationshipMap from '../components/RelationshipMap';
 
 export default function Home() {
   return (
     <div style={{ padding: '2rem' }}>
       <h1></h1>
-      <MermaidMap />
+      <RelationshipMap />
     </div>
   );
 }
