@@ -8,7 +8,15 @@ export default function NodeTooltip({ relation }) {
       <div>Type: {relation.type}</div>
       <div>{relation.justification}</div>
       <div>
-        Sources: {relation.sources.join(', ')}
+        Sources:{' '}
+        {Array.isArray(relation.sources)
+          ? relation.sources.map((src, idx) => (
+              <span key={idx}>
+                {src}
+                {idx < relation.sources.length - 1 ? ', ' : ''}
+              </span>
+            ))
+          : 'No sources'}
       </div>
       <div>
         Tags: {relation.tags.join(', ')}
