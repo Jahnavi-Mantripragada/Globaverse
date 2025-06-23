@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "d3": "latest",
-    "mermaid": "^11.7.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
