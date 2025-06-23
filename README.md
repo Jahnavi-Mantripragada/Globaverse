@@ -30,7 +30,7 @@ src/
     colorUtils.js
     formatter.js
   pages/
-    Home.jsx
+    index.jsx
     Contribute.jsx
     BusinessView.jsx
     api/
