@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import relationships from '../data/relationships.json';
 import { relationColor } from '../utils/colorUtils';
-import SidePanel from './SidePanel';
 import FilterPanel from './FilterPanel';
 
 const width = 600;
@@ -10,7 +9,6 @@ const height = 400;
 
 export default function RelationshipMap() {
   const svgRef = useRef(null);
-  const [selected, setSelected] = useState(null);
   const [filters, setFilters] = useState({
     showAlliance: true,
     showConflict: true,
@@ -82,8 +80,7 @@ export default function RelationshipMap() {
           (d.source.id && d.source.id === h) ||
           (d.target.id && d.target.id === h);
         return involves ? 1 : 0.3;
-      })
-      .on('click', (event, d) => setSelected(d));
+      });
 
     const node = svg
       .append('g')
@@ -100,11 +97,7 @@ export default function RelationshipMap() {
           .on('start', dragstarted)
           .on('drag', dragged)
           .on('end', dragended)
-      )
-      .on('click', (event, d) => {
-        const rel = relationships.find(r => r.source === d.id || r.target === d.id);
-        setSelected(rel);
-      });
+      );
 
     const label = svg
       .append('g')
@@ -159,7 +152,6 @@ export default function RelationshipMap() {
   return (
     <div style={{ position: 'relative', display: 'flex' }}>
       <svg ref={svgRef} width={width} height={height} />
-      <SidePanel relation={selected} />
       <FilterPanel filters={filters} setFilters={setFilters} />
     </div>
   );

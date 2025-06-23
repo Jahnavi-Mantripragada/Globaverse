@@ -7,7 +7,7 @@ import { relationColor } from '../utils/colorUtils';
 const width = 960;
 const height = 500;
 
-export default function Map({ onCountrySelect }) {
+export default function Map({ onSelectCountry }) {
   const svgRef = useRef(null);
   const [relations, setRelations] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -55,7 +55,7 @@ export default function Map({ onCountrySelect }) {
         .attr('r', 2)
         .attr('fill', 'black')
         .on('click', () => {
-          if (onCountrySelect) onCountrySelect(country.properties.name);
+          if (onSelectCountry) onSelectCountry(country.properties.name);
         });
     });
 
