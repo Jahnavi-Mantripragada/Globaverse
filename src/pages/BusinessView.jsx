@@ -16,7 +16,10 @@ export default function BusinessView() {
         <h1>Business View</h1>
         <Map onCountrySelect={setSelected} />
       </main>
-      <CountrySidePanel country={selected || countryMeta[0]} />
+      <CountrySidePanel
+        country={selected || countryMeta[0]}
+        onClose={() => setSelected(null)}
+      />
     </div>
   );
 }
